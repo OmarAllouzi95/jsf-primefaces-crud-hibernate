@@ -1,1 +1,1 @@
-# jsf-primefaces-crud-hibernate
+#[Simple CRUD Operation with JSF and PrimeFaces With Hibernate]
