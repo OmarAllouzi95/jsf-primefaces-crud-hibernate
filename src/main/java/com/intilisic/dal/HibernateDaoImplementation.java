@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.hibernate.Transaction;
 
+import com.intilisic.core.exception.DaoException;
 import com.intilisic.dto.Employee;
 
 import org.hibernate.Session;
@@ -81,7 +82,7 @@ public class HibernateDaoImplementation implements Dao<Employee> {
 	}
 
 	@Override
-	public void update(Employee employee) {
+	public void update(Employee employee) throws DaoException {
 		// TODO Auto-generated method stub
 		Transaction transaction = null;
 		try (Session session = getCurrentSession()) {
@@ -95,13 +96,13 @@ public class HibernateDaoImplementation implements Dao<Employee> {
 			if (transaction != null) {
 				transaction.rollback();
 			}
-			e.printStackTrace();
+			throw new DaoException("No Employee With This Id Found");
 		}
 
 	}
 
 	@Override
-	public void delete(long id) {
+	public void delete(long id) throws DaoException {
 		// TODO Auto-generated method stub
 		Transaction transaction = null;
 		try (Session session = getCurrentSession()) {
@@ -110,17 +111,15 @@ public class HibernateDaoImplementation implements Dao<Employee> {
 
 			// Delete a user object
 			Employee employee = session.get(Employee.class, id);
-			if (employee != null) {
-				session.delete(employee);
-				System.out.println("Employee is deleted");
-			}
+			session.delete(employee);
+			System.out.println("Employee is deleted");
 			// commit transaction
 			transaction.commit();
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
-			e.printStackTrace();
+			throw new DaoException("No Employee With This Id Found");
 		}
 
 	}

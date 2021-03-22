@@ -3,6 +3,8 @@ package com.intilisic.core;
 import java.util.List;
 import java.util.Optional;
 
+import com.intilisic.core.exception.BusinessException;
+import com.intilisic.core.exception.DaoException;
 import com.intilisic.dal.DaoFactory;
 import com.intilisic.dto.Employee;
 
@@ -20,8 +22,13 @@ public class EmployeeBusiness {
 		DaoFactory.getDao(DaoFactory.HIBERNATE).save(employee);
 	}
 
-	public void delete(Employee employee) {
-		DaoFactory.getDao(DaoFactory.HIBERNATE).delete(employee.getId());
+	public void delete(Employee employee) throws BusinessException {
+		try {
+			DaoFactory.getDao(DaoFactory.HIBERNATE).delete(employee.getId());
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			throw new BusinessException("DATABASE_EXCEPTION");
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -31,8 +38,13 @@ public class EmployeeBusiness {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void update(Employee employee) {
-		DaoFactory.getDao(DaoFactory.HIBERNATE).update(employee);
+	public void update(Employee employee) throws BusinessException {
+		try {
+			DaoFactory.getDao(DaoFactory.HIBERNATE).update(employee);
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			throw new BusinessException("DATABASE_EXCEPTION");
+		}
 	}
 
 }

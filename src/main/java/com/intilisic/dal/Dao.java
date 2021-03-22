@@ -3,6 +3,8 @@ package com.intilisic.dal;
 import java.util.List;
 import java.util.Optional;
 
+import com.intilisic.core.exception.DaoException;
+
 public interface Dao<T> {
 
 	Optional<T> get(long id);
@@ -11,7 +13,7 @@ public interface Dao<T> {
 
 	void save(T t);
 
-	void update(T t);
+	void update(T t) throws DaoException;
 
-	void delete(long id);
+	void delete(long id) throws DaoException;
 }

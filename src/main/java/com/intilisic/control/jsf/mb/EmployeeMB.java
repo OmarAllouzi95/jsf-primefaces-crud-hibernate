@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import com.intilisic.core.EmployeeBusiness;
+import com.intilisic.core.exception.BusinessException;
 import com.intilisic.dto.Employee;
 
 import java.io.Serializable;
@@ -38,7 +39,12 @@ public class EmployeeMB implements Serializable {
 	}
 
 	public void delete(Employee employee) {
-		employeeBusiness.delete(employee);
+		try {
+			employeeBusiness.delete(employee);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.employees = employeeBusiness.getAllEmployees();
 
 	}
@@ -64,7 +70,12 @@ public class EmployeeMB implements Serializable {
 	}
 
 	public void update() {
-		employeeBusiness.update(employee);
+		try {
+			employeeBusiness.update(employee);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.employees = employeeBusiness.getAllEmployees();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update successful"));
 	}
